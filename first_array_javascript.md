@@ -386,11 +386,9 @@ if(number == array2.length){
 #### Math.max.apply()
 
 ```jsx
-최대값을 구하기 위해서 Function.prototype.apply()를 사용할 수 있습니다. 최대값을 구하는 Math.max 함수에 적용합니다. 아래 예제를 봐주세요.
 var myArray = [-3, -2, 1, 3, 5];
 var max = Math.max.apply(null, myArray);
 
-위 코드를 실행하면 아래와 같이 5가 출력됩니다.
 5 // 최대값 5가 출력됨
 ```
 
