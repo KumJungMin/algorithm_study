@@ -134,7 +134,7 @@ function stack(){
 
 ## 4) stack 문제 풀어보기
 
-### (1) <a href=" https://www.acmicpc.net/problem/10828">10828번, 스택</a>
+### (1) <a href="https://www.acmicpc.net/problem/10828">10828번, 스택</a>
 
 ```javascript
 // 명령입력받기
