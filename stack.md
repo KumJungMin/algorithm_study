@@ -134,143 +134,234 @@ function stack(){
 
 ## 4) stack 문제 풀어보기
 
-### (1) 10828번, 스택
+### (1) <a href=" https://www.acmicpc.net/problem/10828">10828번, 스택</a>
 
-> 정수를 저장하는 스택을 구현한 다음, 입력으로 주어지는 명령을 처리하는 프로그램을 작성하시오. <br/> 명령은 총 다섯 가지이다. <br/><br/> push X: 정수 X를 스택에 넣는 연산이다. <br/> pop: 스택에서 가장 위에 있는 정수를 빼고, 그 수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다. <br/> size: 스택에 들어있는 정수의 개수를 출력한다. <br/> empty: 스택이 비어있으면 1, 아니면 0을 출력한다. <br/> top: 스택의 가장 위에 있는 정수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다. <br/><br/> 입력 <br/> 첫째 줄에 주어지는 명령의 수 N (1 ≤ N ≤ 10,000)이 주어진다. 둘째 줄부터 N개의 줄에는 명령이 하나씩 주어진다. 주어지는 정수는 1보다 크거나 같고, 100,000보다 작거나 같다. 문제에 나와있지 않은 명령이 주어지는 경우는 없다. <br/> <br/> 출력 <br/> 출력해야하는 명령이 주어질 때마다, 한 줄에 하나씩 출력한다.
+```javascript
+// 명령입력받기
+var input = prompt('명령의 수를 입력하시오');
+// 스택 저장소
+var box = []
 
-
-
-
-
-## 2) 최댓값 문제
-
-### (1) 설명
-
-- 입력 : 9개의 수 입력
-
-- 출력 : 최댓값이 몇번째에 입력됐는지 리턴
-
-<br/>
-
-### (2) 유용한 메소드
-
-#### indexOf()
-
-: 요소가 배열에서 몇번째에 위치했는지 출력해준다.
-
-<br/>
-
-#### Math.max.apply()
-
-```jsx
-var myArray = [-3, -2, 1, 3, 5];
-var max = Math.max.apply(null, myArray);
-
-5 // 최대값 5가 출력됨
-```
-
-<br/>
-
-### (3) 코드 및 결과
-
-```jsx
-//1. 9번 반복하여 수 입력을 받고, 이 수를 배열에 저장한다.
-var array = []
-var count = 9
-
-while(count > 0){
-	var input_num = prompt('수를 입력하시오')    //배열들은 string 형태
-	array.push(input_num);
-	count --;
+// 명령수만큼 반복
+while(input > 0){
+    // 명령입력받기
+    var text = prompt('명령하시오');
+    stackFunc(text);
+    input = input-1;
 }
 
-var max_num = Math.max.apply(null, array);  //number 형태
 
-console.log(array.indexOf(String(max_num)))+1)  //형이 다르면 index가 안나옴
+// 함수
+// push X일시 box에 X가 추가 
+function stackFunc(text){
+    // 받은 text에 push라는 말이 있다면?
+    // 띄어쓰기 단위로 잘라서 -> 마지막 인덱스만 쟁취(형변환)
+    if(text.includes('push')){
+        splitText = text.split(' ');
+        box.push(parseInt(splitText[1])) 
+    }
+    else if(text.includes('pop')){
+        let pops = box.pop();
+        pops === undefined ? alert(-1) : alert(pops)
+    }
+    // size: 스택에 들어있는 정수의 개수를 출력한다.
+    else if(text.includes('size')){
+        alert(box.length);
+    }
+    //empty: 스택이 비어있으면 1, 아니면 0을 출력한다.
+    else if(text.includes('empty')){
+        box.length === 0 ? alert(1) : alert(0)
+    }
+    //top: 스택의 가장 위에 있는 정수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다.
+    else if(text.includes('top')){
+        box.length === 0 ? alert(-1) : alert(box[box.length-1])
+    }
 
-//2. 배열에서 제일 큰 값을 찾고, 그 값의 인덱스 값+1을 리턴한다.
-```
-
-<img src="https://postfiles.pstatic.net/MjAyMDA2MjVfMzUg/MDAxNTkzMDY1Mzk4MjQ2.bbp0nl_9pCW0Pthn4qlnDCeDY_mw0Q0-jQyu7qWft_sg.N6tEJCGp_Sgs3DV_QFVVUaZcki0c1RZkGjgRgJEPupcg.PNG.rmawjdals/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2020-06-25_%EC%98%A4%ED%9B%84_2.03.51.png?type=w580" style="width:50%"/>
-
-
-<br/>
-
-<br/>
-
-
-## 3) 숫자의 개수 문제
-
-### (1) 설명
-
-- 입력 : 세 개의 자연수 입력
-
-- 출력 : 세 개의 자연수를 곱한 결과값에서 0~9 숫자들의 개수를 출력
-
-<br/>
-
-### (2) 유용한 메소드
-
-#### forEach()
-
-```jsx
-const array1 = ['a', 'b', 'c'];
-
-array1.forEach(element => console.log(element));
-
-// expected output: "a"
-// expected output: "b"
-// expected output: "c"
-
-```
-
-
-<br/>
-
-### (3) 코드 및 결과
-
-```jsx
-var count = 3;        // 입력할 수의 개수
-var array1 = [];      // 입력된 값들을 저장하는 배열
-while(count > 0){
-	var input_num = prompt('숫자를 입력하시오')
-	array1.push(Number(input_num));        //계산을 위해 Number로 형변환
-	count --;
 }
-var results = array1[0] * array1[1] * array1[2] //세 개의 곱 계산
-var array2 = String(results).split('')          //split를 위해 String변환
-
-var array3 = [0,0,0,0,0,0,0,0,0,0];               //숫자별 개수 저장 배열
-
-//array2의 요소를 꺼내, 2가 나오면 -> array3의 2번째 배열 원소 값을 +1 증가시킴
-array2.forEach((ele)=>{array3[Number(ele)] = array3[Number(ele)] + 1})
 ```
 
-<img src="https://postfiles.pstatic.net/MjAyMDA2MjVfMzAg/MDAxNTkzMDY1Mzk4MjQw.rMCY_tGsAV5gfb4xvoQ_GgqPQI__THGDElSRX-chlCgg.pqL6W4FkDCoz0ovlDNnogHOao7QjiB34vlGI3j88b0Qg.PNG.rmawjdals/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2020-06-25_%EC%98%A4%ED%9B%84_2.24.10.png?type=w580" style="width:50%"/>
+<br/>
+
+### (2) <a href="https://www.acmicpc.net/problem/10773">10773, 제로</a>
+
+```javascript
+// 정수가 "0" 일 경우에는 가장 최근에 쓴 수를 지우고, 아닐 경우 해당 수를 쓴다.
+// 재민이가 최종적으로 적어 낸 수의 합을 출력한다. 
+// 1. 입력할 숫자의 개수를 받음
+var input = prompt('재민아, 입력할 숫자의 개수를 말해죠!')
+var box = []
+var sum = 0
+while(input > 0){
+    // 2. 수를 입력받는다.
+    var nums = parseInt(prompt('수를 말해주세요'))
+
+    // 3. 만약 입력받은 수가 0이면 -> pop() | 아니면 stack에 넣음
+    nums == 0 ? box.pop() : box.push(nums)
+
+    input = input - 1;
+}
+
+for(var value of box){
+    sum = sum + parseInt(value) 
+}
+alert(sum);
+
+// 4. 마지막에 stack의 합을 출력
+```
+
+<br/>
+
+### (3) <a href="https://www.acmicpc.net/problem/9012">9012, 괄호</a>
+
+```javascript
+// 4. 스택배열(box)에 arr원소를 하나씩 push
+function vps(arr){
+    let box = []                        
+    for(let value of arr){
+        // 4-1. box가 비어있거나, box의 끝값이 ")"이고 push값이 "(" 그냥 push
+        if(box.length == 0 || value == "(" && box[box.length-1] == ")"){
+            box.push(value);            
+            alert("box:" + box, "push:" + value)        //괄호흐름확인
+        }
+
+        // 4-2. box안에 있는 문자가 "("이고 push값이 ")"이면 -> (,)이므로 box를 pop
+        else if(value == ")" && box[box.length-1] == "("){
+            box.pop();                  
+            alert("box:" + box, "push:" + value)
+        }
+        //4-3. 그 이외는 push
+        else{
+            box.push(value);          
+            alert("box:" + box, "push:" + value)
+        } 
+    }
+    (box.length == 0) ? result.push('YES') : result.push('NO')
+}
+
+
+var input = prompt('입력할 개수')              //1. 입력할 개수
+var result = [];
+
+while(input > 0){
+    sample = prompt('괄호조합을 입력받음');      //2. 괄호조합을 입력
+    let arr = sample.split('');            // 3. 괄호조합을 배열로 변경
+
+    vps(arr);
+    input = input - 1;
+}
+alert(result)                        
+
+
+```
+
+<br/>
+
+
+### (4) <a href="https://www.acmicpc.net/problem/4949">4949, 균형잡인 세상</a>
+
+#### 정규식으로 특정 문자, 숫자 등 제외하기
+- 정규식 표현
+
+```js
+function onlyNumber(str) {
+
+    var pattern_special = /[~!@\#$%<>^&*\()\-=+_\’]/gi,
+        pattern_kor = /[ㄱ-ㅎ가-힣]/g,
+        pattern_eng = /[A-za-z]/g;
+
+    if (pattern_special.test(str) || pattern_kor.test(str) || pattern_eng.test(str)) {
+        return str.replace(/[^0-9]/g, "");
+    } else {
+        return false;
+    }
+
+}
+```
+
+[옵션] : g(전체 검사), i(대소문자 모두 검사)
+
+[숫자만추출] : /[a-z]/gi
+
+[문자만추출] : /[1-9]/gi
+
+[공백제거] : str1.replace(/(\s*)/g, "")
+
+
+<br/>
+
+- string.replace( 'string1', 'string2' )
+
+: string에서 string1을 찾아 string2로 바꾼다.
+
+
+<br/>
+
+```javascript
+var result = []
+function onlySpecial(str) {  
+    let pattern_eng = /[A-za-z]/g
+
+    if (pattern_eng.test(str)) {                        
+        let test1 = str.replace(/[a-z]/gi, "");        
+        let test2 = test1.replace(/(\s*)/g, "");      
+        // /[a-z]/gi
+        
+        alert(test2.split(''))
+        return test2.split('')
+    } else {
+        return false;
+    }
+
+}
+
+
+// 3. (), []를 판단하는 함수 작성
+function vps(arr){
+    let box = []                        
+    for(let value of arr){
+        
+        // 4-1. box가 비어있거나, box의 끝값이 ")"이고 push값이 "(" 그냥 push
+        if(box.length == 0 || (value == "(" && box[box.length-1] == ")") || (value == "[" && box[box.length-1] == "]")){
+            box.push(value);            
+            alert("box:" + box, "push:" + value)        //괄호흐름확인
+        }
+
+        // 4-2. box안에 있는 문자가 "("이고 push값이 ")"이면 -> (,)이므로 box를 pop
+        else if((value == ")" && box[box.length-1] == "(") || (value == "]" && box[box.length-1] == "[")){
+            box.pop();                  
+            alert("box:" + box, "push:" + value)
+        }
+        //4-3. 그 이외는 push
+        else{
+            box.push(value);          
+            alert("box:" + box, "push:" + value)
+        } 
+    }
+    (box.length == 1) ? result.push('YES') : result.push('NO')
+}
 
 
 
 
+// 1. 입력받는다.
+// 2. 입력의 종료조건으로 맨 마지막에 점 하나(".")가 들어온다.
+while(true){
+    let input = prompt('문자를 입력하시오');
+    if(input == '.'){
+        break;
+    }else{
+        let specText = onlySpecial(input);          //오직, 괄호만 남은 배열
+        try {
+            vps(specText)
+        } catch (TypeError) {                       //첫글자에 띄우고, 정규식 이후 배열에 괄호가 없는 경우 때 에러 " ."
+            result.push('YES');    
+        }
+    }
+}
+alert(result)                     
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
 
