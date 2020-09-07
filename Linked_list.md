@@ -244,31 +244,6 @@ this.indexOf = function(element){
 
 <br/>
 
-- indexOf() : 원소값을 인자로 받아, 해당 원소의 인덱스르 반환한다.
-
-```javascript
-this.indexOf = function(element){
-//리스트 순회를 위해 current를 시작점으로 함
-  var current = head;
-  var index = -1;
-  
-  while(current){
-    //element와 현재위치의 element와 같다면? -> index 리턴
-    if(element === current.element){
-      return index;
-    }
-    //다르면 -> 계속 순회
-    index++;
-    current = current.next;
-  }
-  return -1;
-};
-
-```
-
-<br/>
-
-
 - isEmpty() : 리스트에 원소가 하나라도 있으면 true, 아니면 false를 반환한다.
 
 - size() : 리스트의 크기를 반환한다.
@@ -388,8 +363,74 @@ this.insert = function(position, element){
 };
 ```
 
+<br/>
+
+### (2) 임의의 위치의 원소 삭제
+
+: 원하는 위치에 도달할 때까지 루프를 반복하면 `current`, `previous`원소 사이에 `node를` 넣는다.
+
+```javascript
+ this.removeAt = function(position){
+  
+  //범위 외의 값인지 체크
+  if(position > -1 && position < length){
+   var current = head,
+    previous,
+    index = 0;
+    
+   //첫 번째 원소를 삭제
+   if(position === 0){
+    head = current.next;    //head는 삭제하고자하는 current의 next로 할당
+    
+    //원소가 하나뿐이라면, tail을 업데이트함
+    if(length === 1){
+     tail = null;
+    }else{
+     head.prev = null;      //첫 번째 원소(head)의 pre는 항상 null임
+    }
+   }
+   
+   //마지막 원소를 삭제(tail위치 원소 삭제하는 경우)
+   else if(position === length-1){
+    current = tail;         //삭제하는 값 임시 저장
+    tail = current.prev;    //tail은 current의 이전값이 됨
+    tail.next = null;       //tail.next는 항상 null이다.
+   }
+   
+   //중간값 삭제하는 경우
+   else{
+    while(index++ < position){ //previous(position-1) | current(position,삭제할 값)
+     previous = current;
+     current = current.next;
+    }
+    
+    //이전 것을 현재의 다음으로 링크(건너뛰기)
+    previous.next = current.next;
+    current.next.prev = previous;
+   }
+   length --;
+   return current.element;
+  }else{
+   return null;
+  }
+ };
+
+```
+
+<br/>
+
+## 4) 환형리스트
+
+### (1) 환형리스트란?
+
+*사진클릭시 이미지 출처로 이동합니다.*
 
 
+<a href="https://supark7.tistory.com/entry/%EC%9B%90%ED%98%95-%EC%97%B0%EA%B2%B0-%EB%A6%AC%EC%8A%A4%ED%8A%B8-Circular-Linked-List"><img width="55%" src="https://t1.daumcdn.net/cfile/tistory/22793044534C1A3C03"/></a>
+
+- 단방향 또는 양방향 참조정보를 갖는다.
+
+- 마지막 원소의 next가 null이 아닌, 첫 번째 원소를 가리킨다.
 
 <br/>
 
