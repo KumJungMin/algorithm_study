@@ -367,7 +367,9 @@ this.insert = function(position, element){
 
 ### (2) 임의의 위치의 원소 삭제
 
-: 원하는 위치에 도달할 때까지 루프를 반복하면 `current`, `previous`원소 사이에 `node를` 넣는다.
+: 원하는 위치를 얻기 위해 루프를 통해 삭제할 원소를 `current`로 받는다.
+
+: `previous.next`는 `current.next`, `current.next.prev`는 `previous`로 각각 바꿔준다.
 
 ```javascript
  this.removeAt = function(position){
@@ -432,15 +434,4 @@ this.insert = function(position, element){
 
 - 마지막 원소의 next가 null이 아닌, 첫 번째 원소를 가리킨다.
 
-<br/>
-
-## 5) 연결리스트 문제 풀어보기
-
-### (1) <a href="#">번, </a>
-
-```javascript
-
-```
-
-<br/>
 
