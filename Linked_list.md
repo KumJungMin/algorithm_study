@@ -266,259 +266,140 @@ this.indexOf = function(element){
 
 ```
 
+<br/>
 
 
+- isEmpty() : 리스트에 원소가 하나라도 있으면 true, 아니면 false를 반환한다.
 
-
-
-
-
-
-
-
-
-
-
-
-
-## 3) stack 클래스, 한눈에 보기
-
-<a href="https://velog.io/@pa324/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-Queue%ED%81%90-udjxr0hb3x"><img width="40%;" src="https://media.vlpt.us/post-images/pa324/392c0570-9fa4-11e9-b079-63bbcd31f7a4/image.png" /></a>
-
+- size() : 리스트의 크기를 반환한다.
 
 ```javascript
-function Queue(){
-  var items = [];
-  
-  this.enqueue = function(element){
-    items.push(element);
-  }
-  this.dequeue = function(){
-    return items[0];
-  }
-  this.isEmpty = function(){
-    return items.length == 0;
-  }
-  this.clear = function(){
-    items = [];
-  }
-  this.size = function(){
-    return items.length;
-  }
-  this.print = function(){
-    console.log(items.toString());
-  }
+this.isEmpty = function(){
+ return length === 0;
+}
+
+this.size = function(){
+ return length;
+}
+
+this.getHead = function(){
+ return head;
+}
+```
+
+<br/>
+
+## 3) 이중연결리스트란
+
+- 이중연결리스트는 이전&다음노드, 총 2개의 연결정보를 가지고 있다.
+
+
+*사진 클릭시 사진 출처로 이동합니다.*
+
+
+<a href="https://untitledtblog.tistory.com/84"><img width="75%" src="https://t1.daumcdn.net/cfile/tistory/243D4C4B5765630C05"/></a>
+
+
+- 아래 코드를 보면...
+
+```javascript
+function DoublyLinkedList(){
+ var Node = function(element){
+  this.element = element;
+  this.next = null;
+  this.prev = tull;       //추가
+ };
+ 
+ var length = 0;
+ var head = null;
+ var taul = null;         //추가
 }
 
 ```
 
-## 4) 여러가지 큐 
+: 아래 코드를 보면 알 수 있듯이, LinkedList와는 달리 2가지가 추가된다.
 
-### (1) 우선순위대로 들어가는 우선순위큐
+: 이전의 연결리스트의 경우 순회시 원소를 찾지 못하면 다시 맨 처음으로 돌아가야한다.
 
-- 일반적인 큐와 달리, 우선순위에 따라 원소가 추가되고 삭제된다.
+: 하지만, 이중연결리스트의 경우 이전&이후노드가 다 연결되어 있으므로 재 순회할 필요가 없다.
 
-- 우선순위큐는 우선순위 대로 들어가거나, 우선순위대로 삭제되는 2가지 경우가 있다.
+<br/>
 
-- 실생활에서 1등석과 비즈니스석 승객은 항상 코치석 승객보다 우선순위가 늪은 것과 같다.
+### (1) 임의의 위치에 원소 삽입
 
+- 이중연결리스트는 next, prev, 링크가 2개가 있다.
+
+: 원하는 위치에 도달할 때까지 루프를 반복하면 `current`, `previous`원소 사이에 `node를` 넣는다.
+
+: previous는 position-1위치인 노드, current는 position위치의 노드이다.
+
+: `[node.next 연결]` 먼저, node의 다음을 current로 둔다. 
+
+: `[previous.next 재연결]` 두 번째, previous의 다음을 노드로 하여 연결을 유지한다.
+
+: `[current.prev 재연결]` 세 번째, current의 이전이 node를 가리킨다.
+
+: `[node.prev 연결]` 네 번째, node의 이전을 previous로 둔다.
 
 ```javascript
-function PriorityQueue(){
-  var items = [];
-  
-  function QueueElement (element, priority){      //(a)
-    this.element = element;
-    this.priority = priority;
-  }
-```
-(a) : 큐 원소에 우선순위가 부가된 새로운 형태의 원소이다.
-
-```javascript
-  this.enqueue = function(element, priority){
-    var queueElement = new QueueElement(element, priority);
-    
-    if(this.isEmpty()){
-      items.push(queueElement);                  //(b)
+this.insert = function(position, element){
+ //범위 외의 값인지 체크한다.
+ if(position >=0 && position <=length){
+  var node = new Node(element),
+   currrent = head,
+   previous,
+   index = 0;
+   
+   //첫 번째 위치에 추가
+   if(position == 0){
+    if(!head){        //head가 없으면 -> node가 head, tail이 됨 
+     head = node;
+     tail = node;
     }
-```
-(b) : 큐가 비어있으면 그냥 원소를 넣는다.
-
-```javascript
     else{
-      var added = false;
-      for(var i=0; i<items.length; i++){
-        if(queueElement.priority < items[i].priority){
-          items.splice(i, 0, queueElement);     //(c)
-          added = true;
-          break;                                //(d)
-        }
-      }
-      if(!added){                               //(e)
-        items.push(queueElement);
-      }
+     node.next = current;  //head앞에 node추가
+     current.prev = node;  //head이전값은 node
+     head = node;          //head는 이제 node
     }
-  };
-  
-  //기본 큐와 동일한 메소드
-}
-
-```
-
-(c) 새원소와 기존원소 비교
-
-: 큐가 비어있지 않으면 먼저 기존 원소들과 우선순위를 비교한다.
-
-: 만약 새 원소보다 기존원소의 우선순위가 더 높다면, 한칸 앞에 새 원소를 추가해준다.
-
-: 이때 Array.slice(인덱스, 삭제할 개수, 넣을 원소)를 사용하여 추가한다.
-
-<br/>
-
-(d) : 루프가 종료된다.
-
-(e) : 만약, 새 원소의 우선순위가 가장 낮다면 큐의 맨 뒤에 추가한다.
-
-
-
-<br/>
-
-### (2) 환형 큐
-
-- 환형큐는 뜨거운 감자 게임과 같다.
-
-```
-뜨거운 감자게임이란, 원형 테이블에 앉아있는 아이들이 뜨거운 감자를 옆 사람에게 넘긴다.
-그러다가 갑자기 모두 동작을 멈추구 그때 뜨거운 감자를 손에 들고 있는 아이가 벌칙으로 퇴장하는 방식이다.
-이 게임은 최후의 1인이 남을 때까지 반복한다.
-```
-
-
-<br/>
-
-## 5) stack 문제 풀어보기
-
-### (1) <a href="https://www.acmicpc.net/problem/18258">18258번, 큐2</a>
-
-```javascript
-//1. 받을 명령의 개수
-var input = prompt('명령의 개수를 입력하시오');
-var box = [];
-
-// 2. 명령의 개수만큼 반복
-while(input > 0){
-    let action = prompt('원하는 동작을 입력하시오');
-    // push가 포함된 명령의 경우, 숫자만 추출하여 -> 입력
-    QueueMethod(action);
-    input = input-1;
-}
-
-function QueueMethod(action){
-    var splitBox = action.split(' ')
-    switch(splitBox[0]){
-        case 'push':
-            return(box.push(splitBox[1]));
-
-        case 'pop':
-            let popresult = box.shift();
-            alert(popresult == undefined ? -1 : popresult);
-            break;
-        
-        case 'size':
-            alert(box.length);
-            break;
-
-        case 'empty':
-            alert(box.length == 0 ? 1 : 0)
-            break;
-        
-        case 'front':
-            alert( box[0] == undefined ? -1 : box[0]);
-            break;
-        
-        case 'back':
-            alert(box[box.length-1] == undefined ? -1 : box[box.length-1]);
-            break;
+   }
+   //마지막 위치에 추가 
+   else if(position == length){
+    current = tail;
+    current.next = node;  //tail다음은 node
+    node.prev = current;  //node이전은 tail
+    tail = node;          //node가 이제 tail
+   }
+   //중간 위치에 추가
+   else{
+   //position-1, position위치의 노드를 찾음(pre, curr)
+    while(index++ < position){
+     previous = current;
+     current = current.next;
     }
-    
-}
-```
-
-<br/>
-
-### (2) <a href="https://www.acmicpc.net/problem/2164">2164, 카드2</a>
-
-```javascript
-//1. n개의 카드가 주어진다.
-card = prompt('카드의 개수를 입력하시오')
-card_num = parseInt(card)
-box = []
-// 2.카드를 정렬한다.
-for(var i=1; i<=card_num; i++){
-    box.push(i);
+    node.next = current;     //node다음은 currnet(position위치 노드)
+    previous.next = node;    //previous(position-1)다음은 노드
+    node.prev = previous;    //node 이전은 previous(position-1)
+   }
+   length++;
+   return true;
+ }else{
+  return false;
+ }
 };
-alert(box);
-
-//3. 
-while(true){
-
-//1,2,3,4
-//0번째 버림
-//0번째 버리고 -> 끝에 추가
-
-    box.shift();
-    alert('box=' + box);
-    let move = box.shift();
-    alert('box=' +  box);
-    box.push(move);
-    alert('box=' +  box);
-    
-    if(box.length == 1){
-        alert(box[0]);
-        break;
-    }
-}
 ```
+
+
+
 
 <br/>
 
-### (3) <a href="https://www.acmicpc.net/problem/11866">11866, 요세푸스 문제 0</a>
+## 5) 연결리스트 문제 풀어보기
+
+### (1) <a href="#">번, </a>
 
 ```javascript
-//1. 1,2,3,4,5,6,7
-// k = 3인 경우 [2번반복, 1번]
-// shift()->push()
-// shift()->push()
-// shift()
-
-// 1. n,k를 입력받는다.
-var input = prompt('n k를 입력하시오');
-var inputBox = input.split(' ');
-var n = parseInt(inputBox[0]), k = parseInt(inputBox[1]);
-
-var box = [], result = [];
-//2. n개의 원소로 이루어진 배열 생성
-for(var i=1; i<=n; i++){
-    box.push(i);
-}
-
-// 3. k-1번 shift&push반복 | 1번 shift
-while(true){
-    for(let j=0; j<k-1; j++){
-        let moveNum = box.shift();
-        box.push(moveNum);
-    }
-    let resultNum = box.shift();
-    result.push(resultNum);
-
-    if(box.length == 0){
-        alert(result);
-        break;
-    }
 
 ```
 
 <br/>
-
-
 
