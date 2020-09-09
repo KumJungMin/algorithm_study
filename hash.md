@@ -288,6 +288,8 @@ this.get = function(key){
 };
 ```
 
+<br/>
+
 #### remove()
 
 : remove()는 LinkedList에서 특정 원소를 지워야 한다.
@@ -329,3 +331,113 @@ this.remove = function(key{
 ```
 
 <br/>
+
+### (2) 선형탐색법
+
+#### 선형탐색법이란?
+
+: 새 원소 추가시 인덱스가 이미 점유된 경우, 인덱스+1을 찾아보고 인덱스+1도 점유되었다면 인덱스+2를 찾는 방법이다.
+
+
+*사진 클릭시 이미지 출처로 이동합니다.*
+
+<a href="https://ferrante.tistory.com/43"> <img src="https://blog.kakaocdn.net/dn/df9RUD/btqu14L7Wx2/agM2Q4VqrMeYJ0p9dqAmgk/img.jpg"/> </a>
+
+
+<br/>
+
+#### put()
+
+[1] 해시함수로 인덱스를 찾는다.
+
+[2] 해당 인덱스에 다른 원소가 있는지 체크한다.(다른 원소가 있으면 else로 감)
+
+[3] 다른 원소가 없다면, ValuePair의 인스턴스를 생성해 넣는다.
+
+[4] 다른 원소가 이미 들어간 상태이면 비어있는 인덱스를 찾기위해 index변수를 만들어 position+1을 할당한다.
+
+[5] 다시 이 위치에 다른 원소가 있는지 점검하고, 만약 있으면 [6]index를 계속 하나씩 증가시켜 반복한다.
+
+[7] 결국 찾게 된 인덱스에 값을 세팅한다.
+
+```js
+this.put = function(key, value){
+  var position = loseloseHashCode(key);           //[1]
+  
+  if(table[position] == undefined){               //[2]
+    table[position] = new ValuePair(key, value);  //[3]
+  }else{
+    var index = ++position;             //[4]
+    while(table[index] != undefined){   //[5]
+      index++;        //[6]
+    }
+    table[index] = new ValuePair(key, value);     //[7]
+  }
+};
+```
+
+<br/>
+
+#### get()
+
+[1] 키의 존재여부를 확인한다. 존재하지 않으면 [7]undefined를 반환한다.
+
+[1] 키가 존재한다면 [2]찾는 테이블의 해당 인덱스와 키가 동일한지 보고 [3]동일하면 그 값을 반환한다.
+
+[4] 동일하지 않다면, HashTable 인스턴스의 다음 위치를 반복하여 뒤져본다.
+
+[5] 그리고 원소가 맞는지 다시 한 번 확인해서 [6]그 값을 반환한다.
+
+
+```js
+this.get = function(key){
+  var position = loseloseHashCode(key);
+  
+  if(table[position] !== undefined){    //[1]
+    if(table[position].key === key){    //[2]
+      return table[position].value;     //[3]
+    }else{
+      var index = ++position;
+      while(table[index] === undefined || table[index].key !== key){  //[4]
+        index++;
+      }
+      if(table[index].key === key){     //[5]
+        return table[index].value;      //[6]
+      }
+    }
+  }
+  return undefined;                     //[7]
+};
+```
+
+
+<br/>
+
+## 5) 해시 함수 개선
+
+- 좋은 해시함수라면 원소 삽입과 조회 속도가 빠르고 충돌 확률이 낮아야 한다.
+
+- 결국, 더 좋은 성능의 해시함수를 사용한다면 충돌을 위해 여분의 메모리가 필요치 않게 된다.
+
+- 아래 코드는 충돌이 적은 해시함수이다.
+
+
+```js
+var djb2HashCode = function(key){
+  var hash = 5381;
+  for(var i=0; i<key.length; i++){
+    hash = hash*33 + key.charCodeAt(i);
+  }
+  return hash % 1013;
+}
+```
+
+
+
+
+
+
+
+
+
+
