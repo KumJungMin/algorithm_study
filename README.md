@@ -1,5 +1,5 @@
 # javascript_study_algorithm
-*2020.09.07 updated*
+*2020.09.09 updated*
 
 #### 1. <a href="https://github.com/KumJungMin/javascript_study_algorithm/blob/master/first_array_javascript.md"> 배열과 배열 알고리즘 문제 </a>
 
@@ -10,3 +10,8 @@
 #### 4. <a href="https://github.com/KumJungMin/javascript_study_algorithm/blob/master/Linked_list.md"> 연결리스트 </a>
 
 #### 5. <a href="https://github.com/KumJungMin/javascript_study_algorithm/blob/master/set.md"> 집합 </a>
+
+#### 6. <a href="https://github.com/KumJungMin/javascript_study_algorithm/blob/master/hash.md"> 딕셔너리와 해시 </a>
+
+
+
