@@ -1,7 +1,7 @@
 # Study, Fun algorithm
-*2020.09.09 updated*
 
 ### A. 개념
+*2020.09.09 updated*
 
 #### 1. <a href="https://github.com/KumJungMin/javascript_study_algorithm/blob/master/first_array_javascript.md"> 배열과 배열 알고리즘 문제 </a>
 
