@@ -24,4 +24,5 @@
 LEVEL | TYPE | TITLE 
 ---- | ---- | ----
 LEVEL1 | quene&stack | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/crain_solution.md">크레인 인형뽑기</a>
-|LEVEL1| 완전탐색 | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/42840.md">모의 고사</a>
+LEVEL1| 완전탐색 | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/42840.md">모의 고사</a>
+LEVEL1| 탐욕법 | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/42862.md">체육복</a>
