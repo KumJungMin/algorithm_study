@@ -20,7 +20,7 @@
 <hr/>
 
 ### B. 문제풀이
-*2020.09.18 updated*
+*2020.09.21 updated*
 LEVEL | TYPE | TITLE 
 ---- | ---- | ----
 LEVEL1 | quene&stack | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/crain_solution.md">크레인 인형뽑기</a>
