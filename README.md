@@ -26,3 +26,9 @@ LEVEL | TYPE | TITLE
 LEVEL1 | quene&stack | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/crain_solution.md">크레인 인형뽑기</a>
 LEVEL1| 완전탐색 | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/42840.md">모의 고사</a>
 LEVEL1| 탐욕법 | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/42862.md">체육복</a>
+LEVEL1| k번째 수 | <a href="https://github.com/KumJungMin/algorithm_study/blob/master/programers/42748.md">k번째 수</a>
+LEVEL1| 실패율 | <a href="https://programmers.co.kr/learn/courses/30/lessons/42889?language=python3">실패율</a>
+LEVEL1| 키패드 누르기 | <a href="https://programmers.co.kr/learn/courses/30/lessons/67256?language=python3">키패드 누르기</a>
+
+
+
